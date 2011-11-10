@@ -10,10 +10,6 @@ class TestTimeUnit < Test::Unit::TestCase
     @unit4      = Time::Unit.new Rational(3, 10), :sec
   end
   
-  def test_version
-    assert_equal '0.2.2', Time::Unit::Version
-  end
-  
   def test_parse
     assert_equal @unit1, Time::Unit.parse('2hour 46min 39sec')
     assert_equal @unit1, Time::Unit.parse('2hour 46minute 39second')

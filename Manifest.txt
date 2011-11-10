@@ -3,6 +3,7 @@ Manifest.txt
 PostInstall.txt
 README.rdoc
 Rakefile
+lib/time/unit.rb
 lib/time-unit.rb
 script/console
 script/destroy

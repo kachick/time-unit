@@ -3,6 +3,7 @@ gem 'hoe', '>= 2.1.0'
 require 'hoe'
 require 'fileutils'
 require './lib/time-unit'
+require './lib/time/unit'
 
 Hoe.plugin :newgem
 # Hoe.plugin :website

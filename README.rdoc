@@ -4,8 +4,7 @@
 
 == DESCRIPTION:
 
-* express the interval between two times
-* pure ruby and small libraly
+express the interval between two times
 
 == FEATURES/PROBLEMS:
 
