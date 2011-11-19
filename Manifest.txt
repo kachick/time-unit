@@ -4,9 +4,13 @@ PostInstall.txt
 README.rdoc
 Rakefile
 lib/time/unit.rb
+lib/time/unit/core.rb
+lib/time/unit/import.rb
 lib/time-unit.rb
 script/console
 script/destroy
 script/generate
 test/test_helper.rb
+test/test_helper-import.rb
 test/test_time-unit.rb
+test/test_time-import.rb

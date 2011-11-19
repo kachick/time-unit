@@ -9,3 +9,9 @@
 === 0.0.2 2011-11-11
 
 * fix
+
+=== 0.0.3 2011-11-20
+
+* add docs
+* add time/unit/import
+
