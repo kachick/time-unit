@@ -8,44 +8,59 @@ express the interval between two times
 
 == FEATURES/PROBLEMS:
 
-* into Japanese
-* add methods and testcases
+* documentation
 
 == SYNOPSIS:
 
-  UNITa = Time::Unit.new 30
-  puts UNITa #=> 30sec
-  puts UNITa.to_s(true) #=> 30second
-  puts UNITa.millisecond #=> 30000
-  puts UNITa.second #=> 30
-  puts UNITa.minute #=> 1/2
-  puts UNITa.hour #=> 1/120
+* ex1: basic 1
+    UNITa = Time::Unit.new 30
+    puts UNITa #=> 30sec
+    puts UNITa.to_s(true) #=> 30second
+    puts UNITa.millisecond #=> 30000
+    puts UNITa.second #=> 30
+    puts UNITa.minute #=> 1/2
+    puts UNITa.hour #=> 1/120
 
-  UNITb = Time::Unit.new 3333333, :msec
-  puts UNITb #=> 55min 33sec 333msec
-  puts UNITb.to_s(true) #=> 55minute 33second 333millisecond
-  puts UNITb.millisecond #=> 3333333
-  puts UNITb.hour #=> 1111111/1200000
+* ex2: basic 2
+    UNITb = Time::Unit.new 3333333, :msec
+    puts UNITb #=> 55min 33sec 333msec
+    puts UNITb.to_s(true) #=> 55minute 33second 333millisecond
+    puts UNITb.millisecond #=> 3333333
+    puts UNITb.hour #=> 1111111/1200000
 
-  puts UNITa + UNITb #=> 56min 3sec 333msec
-  puts UNITb - UNITa #=> 55min 3sec 333msec
+* ex3: calculatable
+    puts UNITa + UNITb #=> 56min 3sec 333msec
+    puts UNITb - UNITa #=> 55min 3sec 333msec
+    p Time.now + obj #=> (show increased)
+    p Time.now - obj #=> (show decreased)
 
-  UNITc = Time::Unit.new 900, :hour
-  puts UNITc #=> 37day 12hour
-  puts UNITc.minute #=> 54000
+* ex4: removed empty field when display 
+    UNITc = Time::Unit.new 900, :hour
+    puts UNITc #=> 37day 12hour
+    puts UNITc.minute #=> 54000
 
-  p UNITa < UNITc #=> true
-  p [UNITa, UNITb, UNITc].sort.map(&:to_s) #=> ["30sec", "55min 33sec 333msec", "37day 12hour"]
+* ex5: comparable
+    p UNITa < UNITc #=> true
+    p [UNITa, UNITb, UNITc].sort.map(&:to_s) #=> ["30sec", "55min 33sec 333msec", "37day 12hour"]
 
-  p obj = Time::Unit.parse('55minute 33second 333millisecond') #=> 55min 33sec 333msec
-  p obj2 = Time::Unit.parse('55min 33sec 333msec') #=> 55min 33sec 333msec
-  p obj3 = Time::Unit.parse('55min 10sec 333msec') #=> 55min 10sec 333msec
-  puts obj - obj2 #=> 0
-  puts obj - obj3 #=> 23sec
-  puts obj.day #=> 1111111/28800000
+* ex6: parse from strings
+    p obj = Time::Unit.parse('55minute 33second 333millisecond') #=> 55min 33sec 333msec
+    p obj2 = Time::Unit.parse('55min 33sec 333msec') #=> 55min 33sec 333msec
+    p obj3 = Time::Unit.parse('55min 10sec 333msec') #=> 55min 10sec 333msec
+    puts obj - obj2 #=> 0
+    puts obj - obj3 #=> 23sec
+    puts obj.day #=> 1111111/28800000
 
-  p now + obj #=> (show increased)
-  p now - obj #=> (show decreased)
+* ex7: extend interface
+    last = Time.now
+    sleep 1
+    Time.now - last #=> Float
+
+    require 'time/unit/import'
+    
+    Time.now - last #=> Time::Unit(1sec)
+    
+    1day = Time.Unit(1, :day)
 
 == REQUIREMENTS:
 
