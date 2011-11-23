@@ -12,8 +12,8 @@ class TestTimeUnit < Test::Unit::TestCase
   
   def test_parse
     assert_equal @unit1, Time::Unit.parse('2hour 46min 39sec')
-    assert_equal @unit1, Time::Unit.parse('2hour 46minute 39second')
-    assert_equal Time::Unit.new(120, :min), Time::Unit.parse('1hour 30minute 20minute 600sec')
+    assert_equal @unit1, Time::Unit.parse('2hours 46minutes 39seconds')
+    assert_equal Time::Unit.new(120, :min), Time::Unit.parse('1hours 30minutes 20minute 600sec')
     assert_equal @unit2, Time::Unit.parse('11395585day 11hour 13min 3sec 123msec')
     assert_equal @unit2, Time::Unit.parse('11395585dAys 11hoUr 13minutes 3second 123milliSecond')
     assert_raise(ArgumentError){Time::Unit.parse('1139dayz 11hour')}
@@ -27,11 +27,14 @@ class TestTimeUnit < Test::Unit::TestCase
   
   def test_to_s
     assert_equal '2hour 46min 39sec', @unit1.to_s
-    assert_equal '2hour 46minute 39second', @unit1.to_s(true)
+    assert_equal '2hours 46minutes 39seconds', @unit1.to_s(true)
+    assert_equal '2hours 1minute 39seconds', (@unit1 - Time::Unit.new(45, :min)).to_s(true)
     assert_equal '11395585day 11hour 13min 3sec 123msec', @unit2.to_s
-    assert_equal '11395585day 11hour 13minute 3second 123millisecond', @unit2.to_s(true)
-    assert_equal '0', Time::Unit.new(0).to_s
-    assert_equal '0', Time::Unit.new(0).to_s(true)
+    assert_equal '11395585days 11hours 13minutes 3seconds 123milliseconds', @unit2.to_s(true)
+    assert_equal '1hour 39minutes', Time::Unit.new(99, :min).to_s(true)
+    assert_equal '2hours 1minute', (Time::Unit.new(99, :min) + Time::Unit.new(22, :min)).to_s(true)
+    assert_equal '0msec', Time::Unit.new(0).to_s
+    assert_equal '0milisecond', Time::Unit.new(0).to_s(true)
     assert_equal '300msec', @unit4.to_s
   end
   

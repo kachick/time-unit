@@ -4,17 +4,25 @@
 require 'forwardable'
 require_relative 'core'
 
-class Time
-  class << self
+module Time::Unit::TimeExtention
+  module EigenMethod
     extend Forwardable
-    
+
+    class << self
+      private *Forwardable.instance_methods(false)
+    end
+
     ##
     #
-    def_delegator Unit, :new, :Unit
+    def_delegator ::Time::Unit, :new, :Unit
   end
+end
 
-  alias_method :original_minus, :- unless respond_to? :original_minus
+class Time
+  extend Time::Unit::TimeExtention::EigenMethod
 
+  alias_method :original_minus, :-
+  
   def -(other)
     if other.kind_of? Time
       self.class.Unit((original_minus(other).to_r * 1000).to_i, :msec)

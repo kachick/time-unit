@@ -11,8 +11,8 @@ class Time
   class Unit
     extend Forwardable
     include Comparable
-    
-    VERSION = '0.0.4'.freeze
+
+    VERSION = '0.0.5'.freeze
     Version = VERSION
     
     SECOND      = Rational 1, 1
@@ -20,7 +20,9 @@ class Time
     MINUTE      = SECOND * 60
     HOUR        = MINUTE * 60
     DAY         = HOUR   * 24  
-    
+
+    UNIT_PATTERN = /\A(\d+)(day|hour|min(?:ute)?|sec(?:ond)?|millisecond|msec)s?\z/i
+
     BASE_RADIXES ={
       :hour        => HOUR,
       :day         => DAY
@@ -40,7 +42,12 @@ class Time
     
     RADIXES = SHORTER_RADIXES.merge(VERBOSE_RADIXES).freeze
     
-    FIELD_PATTERN = /\A(\d+)(day|hour|min(?:ute)?|sec(?:ond)?|millisecond|msec)s?\z/i
+    SHORT_UNIT_NAMES = SHORTER_RADIXES.sort_by{|key, val|val}.map{|key, val|key}.reverse.freeze
+    LONG_UNIT_NAMES  = VERBOSE_RADIXES.sort_by{|key, val|val}.map{|key, val|key}.reverse.freeze
+    
+    if RUBY_VERSION >= '1.9.3'
+      private_constant :BASE_RADIXES, :VERBOSE_RADIXES, :SHORTER_RADIXES, :SHORT_UNIT_NAMES, :LONG_UNIT_NAMES
+    end
     
     class << self
       # @return [Time::Unit]
@@ -48,7 +55,7 @@ class Time
         seconds = 0
         
         str.split.each do |field|
-          if FIELD_PATTERN =~ field
+          if UNIT_PATTERN =~ field
             unit = $2.downcase.to_sym
             seconds += ($1.to_i * RADIXES[unit])
           else
@@ -59,6 +66,7 @@ class Time
         new seconds, :second
       end
       
+      private *Forwardable.instance_methods(false)
       private
 
       # @macro [attach] define_reader
@@ -126,32 +134,22 @@ class Time
 
     # @return [Time::Unit]
     def -(other)
-      self.class.new(
-        if self >= other
-          second - other
-        else
-          raise ArgumentError, 'Keep plus number.'
-        end
-      )
+      if self >= other
+        self.class.new(second - other)
+      else
+        raise ArgumentError, 'Keep plus number.'
+      end
     end
     
     # @return [Strirng] separated a space and removed empty field
     def to_s(verbose=false)
-      units = (
-        case verbose
-        when false
-          SHORTER_RADIXES
-        when true
-          VERBOSE_RADIXES
-        else
-          raise ArgumentError, 'Choose verbose-option from [true, false].'
-        end
-      ).sort_by{|key, val|val}.map{|key, val|key}.reverse
-
-      if (list = to_a).all?{|size|size == 0}
-        '0'
+      case verbose
+      when false
+        to_short_str
+      when true
+        to_verbose_str
       else
-        list.each_with_index.select{|size, i|size > 0}.map{|size, i|"#{size}#{units[i]}"}.join(' ')
+        raise ArgumentError, 'Choose verbose-option from [true, false].'
       end
     end
     
@@ -191,5 +189,27 @@ class Time
         raise ArgumentError, 'Choose from [Integer, Rational].'
       end
     end
+    
+    def nonempty_units
+      to_a.each_with_index.select{|size, i|size > 0}
+    end
+
+    def to_short_str
+      if (units = nonempty_units).any?
+        units.map{|size, i|"#{size}#{SHORT_UNIT_NAMES[i]}"}.join(' ')
+      else
+        '0msec'
+      end
+    end
+
+    def to_long_str
+      if (units = nonempty_units).any?
+        units.map{|size, i|"#{size}#{LONG_UNIT_NAMES[i]}#{size > 1 ? 's' : nil}"}.join(' ')
+      else
+        '0milisecond'
+      end
+    end
+    
+    alias_method :to_verbose_str, :to_long_str
   end
 end

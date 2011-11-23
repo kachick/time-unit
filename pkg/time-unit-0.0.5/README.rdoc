@@ -20,10 +20,11 @@ express the interval between two times
 
 * return other units
     sec_30.millisecond #=> 30000
-    sec_30.second #=> 30
-    sec_30.minute #=> 1/2
-    sec_30.hour #=> 1/120
-
+    sec_30.second      #=> 30
+    sec_30.minute      #=> 1/2
+    sec_30.hour        #=> 1/120
+    sec_30.day         #=> 1/2880
+   
 * extend interface
     last = Time.now
     sleep 1
@@ -42,9 +43,11 @@ express the interval between two times
 * construct with unit name
     min_55_and_more = Time.Unit(3333333, :msec) #=> 55min 33sec 333msec
 
-* has long format
-    min_55_and_more.to_s(true) #=> 55minute 33second 333millisecond
-
+* verbose formatable
+    min_55_and_more.to_s(true) #=> 55minutes 33seconds 333milliseconds
+    Time.Unit(99, :min).to_s(true) #=> 1hour 39minutes
+    (Time.Unit(99, :min) + Time.Unit(22, :min)).to_s(true) #=> 2hours 1minute
+ 
 * calculatable
     sec_30 + min_55_and_more #=> 56min 3sec 333msec
     min_55_and_more - sec_30 #=> 55min 3sec 333msec
@@ -70,8 +73,8 @@ express the interval between two times
 
 == REQUIREMENTS:
 
-* Ruby 1.9.2
 * Ruby 1.9.3
+* Ruby 1.9.2
 
 == INSTALL:
 
