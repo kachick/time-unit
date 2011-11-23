@@ -4,15 +4,15 @@
 
 require 'forwardable'
 
-# @author Kenichi Kamiya
 class Time
+  # @author Kenichi Kamiya
   # * express the interval between two times
-  # * internal base unit is second(s)
+  # * internal base unit is second
   class Unit
     extend Forwardable
     include Comparable
     
-    VERSION = '0.0.3'.freeze
+    VERSION = '0.0.4'.freeze
     Version = VERSION
     
     SECOND      = Rational 1, 1
@@ -38,7 +38,7 @@ class Time
       :min         => MINUTE
     ).freeze
     
-    RADIXES = SHORTER_RADIXES.merge VERBOSE_RADIXES
+    RADIXES = SHORTER_RADIXES.merge(VERBOSE_RADIXES).freeze
     
     FIELD_PATTERN = /\A(\d+)(day|hour|min(?:ute)?|sec(?:ond)?|millisecond|msec)s?\z/i
     
@@ -63,7 +63,7 @@ class Time
 
       # @macro [attach] define_reader
       #   @method $1()
-      #   @return [Integer]
+      #   @return [Number]
       def define_reader(unit)
         define_method unit do
           rational = @second / RADIXES[unit]
@@ -110,7 +110,7 @@ class Time
     define_changer :milisecond
     define_changer :msec
 
-    # @return [Integer]
+    # @return [Number]
     def hash
       [self.class, @second].hash
     end
@@ -144,7 +144,7 @@ class Time
         when true
           VERBOSE_RADIXES
         else
-          raise ArgumentError, 'Choose verbose-option in [true or false].'
+          raise ArgumentError, 'Choose verbose-option from [true, false].'
         end
       ).sort_by{|key, val|val}.map{|key, val|key}.reverse
 
@@ -155,29 +155,7 @@ class Time
       end
     end
     
-    private
-    
-    def replace(size, unit)
-      raise ArgumentError, 'Keep plus number.' unless size >= 0
-      raise ArgumentError, 'Only Integer for msec.' if size.kind_of? Rational and [:msec, :millisecond].include? unit
-
-      case size
-      when Integer, Rational
-        if radix = RADIXES[unit]
-          if (second = size * radix) % MILLISECOND == 0
-            @second = second
-            self
-          else
-            raise ArgumentError, 'Too small number.'
-          end
-        else
-          raise ArgumentError, "Out of range. Choose in [#{RADIXES.keys.join(',')}]."
-        end
-      else
-        raise ArgumentError, "Choose in [Integer, Rational]."
-      end
-    end
-
+    # @return [Array<Number>]
     def to_a
       [].tap do |list|
         val  = 0
@@ -191,6 +169,26 @@ class Time
         msec = rest / MILLISECOND
         
         list << (msec == msec.to_i ? msec.to_i : raise('must not happen'))
+      end
+    end
+    
+    private
+    
+    def replace(size, unit)
+      raise ArgumentError, "Unknown unit. Choose from [#{RADIXES.keys.join(', ')}]." unless radix = RADIXES[unit]
+      raise ArgumentError, 'Keep plus number.' unless size >= 0
+      raise ArgumentError, 'Only Integer for msec.' if [:msec, :millisecond].include?(unit) and ! size.kind_of?(Integer)
+
+      case size
+      when Integer, Rational
+        if (second = size * radix) % MILLISECOND == 0
+          @second = second
+          self
+        else
+          raise ArgumentError, 'Contain too small number.'
+        end
+      else
+        raise ArgumentError, 'Choose from [Integer, Rational].'
       end
     end
   end

@@ -15,3 +15,8 @@
 * add docs
 * add time/unit/import
 
+=== 0.0.4 2011-11-24
+
+* modify README, core
+* private #to_a => public #to_a
+

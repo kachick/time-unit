@@ -1,6 +1,6 @@
 = Time::Unit
 
-* http://github.com/kachick/time-unit
+http://github.com/kachick/time-unit
 
 == DESCRIPTION:
 
@@ -12,52 +12,59 @@ express the interval between two times
 
 == SYNOPSIS:
 
-* ex: prepare
+* prepare
     require 'time/unit'
 
-* ex: standard construction
+* standard construction
     sec_30 = Time::Unit.new(30) #=> 30sec
 
-* ex: extend interface
-    last = Time.now
-    sleep 1
-    Time.now - last #=> Float
-
-    require 'time/unit/import'
-    
-    Time.now - last #=> Time::Unit # 1sec
-    day_1 = Time.Unit(1, :day) #=> 1day
-
-* ex: default construction from seconds
-    sec_30 = Time.Unit(30) #=> 30sec
-    sec_30.to_s(true) #=> 30second
+* return other units
     sec_30.millisecond #=> 30000
     sec_30.second #=> 30
     sec_30.minute #=> 1/2
     sec_30.hour #=> 1/120
 
-* ex: construct with unit name
+* extend interface
+    last = Time.now
+    sleep 1
+    # Here, not tainted other namespaces
+    Time.now - last #=> 1.0(Float)
+
+    # extend
+    require 'time/unit/import'
+    
+    # as you see
+    Time.now - last #=> 1sec(Time::Unit)
+
+    # and added constructor (Time.Unit => Time::Unit.new)
+    day_1 = Time.Unit(1, :day) #=> 1day
+
+* construct with unit name
     min_55_and_more = Time.Unit(3333333, :msec) #=> 55min 33sec 333msec
+
+* has long format
     min_55_and_more.to_s(true) #=> 55minute 33second 333millisecond
 
-* ex: calculatable
+* calculatable
     sec_30 + min_55_and_more #=> 56min 3sec 333msec
     min_55_and_more - sec_30 #=> 55min 3sec 333msec
     Time.now + sec_30 #=> (show increased)
     Time.now - sec_30 #=> (show decreased)
+    # cast arguments to seconds when Integer or Rational
+    Time.Unit(1, :hour) + 330 #=> 1hour 5min 30sec
 
-* ex: max unit is day(not mounth or year)
+* max unit is day(not mounth or year)
     hour_900 = Time.Unit(900, :hour) #=> 37day 12hour
 
-* ex: sort and remove empty field when display
-    Time.Unit(400, :msec) + Time.Unit(20, :day) #=> 20day 400msec
+* sort and remove empty field when display
+    Time.Unit(400, :msec) + 20 + Time.Unit(20, :day) + 40 #=> 20day 1min 400msec (removed 0sec)
 
-* ex: comparable
+* comparable
     sec_30 < hour_900 #=> true
     [sec_30, min_55_and_more, hour_900].sort #=> ["30sec", "55min 33sec 333msec", "37day 12hour"]
 
-* ex: parse from strings
-    unit_1 = Time::Unit.parse('55minute 33second 333millisecond') #=> 55min 33sec 333msec
+* parse from strings
+    unit_1 = Time::Unit.parse('55minutes 33seconds 333milliseconds') #=> 55min 33sec 333msec
     unit_2 = Time::Unit.parse('55min 33sec 333msec') #=> 55min 33sec 333msec
 
 
