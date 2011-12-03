@@ -1,3 +1,4 @@
+$VERBOSE = true
 require File.dirname(__FILE__) + '/test_helper.rb'
 
 class TestTimeUnit < Test::Unit::TestCase
@@ -34,7 +35,7 @@ class TestTimeUnit < Test::Unit::TestCase
     assert_equal '1hour 39minutes', Time::Unit.new(99, :min).to_s(true)
     assert_equal '2hours 1minute', (Time::Unit.new(99, :min) + Time::Unit.new(22, :min)).to_s(true)
     assert_equal '0msec', Time::Unit.new(0).to_s
-    assert_equal '0milisecond', Time::Unit.new(0).to_s(true)
+    assert_equal '0millisecond', Time::Unit.new(0).to_s(true)
     assert_equal '300msec', @unit4.to_s
   end
   
@@ -73,5 +74,10 @@ class TestTimeUnit < Test::Unit::TestCase
   
   def test_truth
     assert true
+  end
+
+  def test_class_method
+    assert_equal Time.Unit(5), Time::Unit.new(5)
+    assert_equal Time.Unit(5).class, Time::Unit.new(5).class
   end
 end

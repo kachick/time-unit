@@ -1,5 +1,5 @@
 # Time::Unit
-#   Copyright (C) 2010-2011  Kenichi Kamiya
+#   Copyright (C) 2010  Kenichi Kamiya
 #   documented for YARD format
 
 require 'forwardable'
@@ -12,11 +12,14 @@ class Time
     extend Forwardable
     include Comparable
 
-    VERSION = '0.0.5'.freeze
+    VERSION = '0.0.6'.freeze
     Version = VERSION
     
     SECOND      = Rational 1, 1
     MILLISECOND = SECOND / 1000
+    MICROSECOND = MILLISECOND / 1000
+    NANOSECOND  = MICROSECOND / 1000
+    PICOSECOND  = NANOSECOND / 1000
     MINUTE      = SECOND * 60
     HOUR        = MINUTE * 60
     DAY         = HOUR   * 24  
@@ -31,6 +34,9 @@ class Time
     VERBOSE_RADIXES = BASE_RADIXES.merge(
       :second      => SECOND,
       :millisecond => MILLISECOND,
+      :microsecond => MICROSECOND,
+      :nanosecond  => NANOSECOND,
+      :picosecond  => PICOSECOND,
       :minute      => MINUTE
     ).freeze
     
@@ -45,7 +51,7 @@ class Time
     SHORT_UNIT_NAMES = SHORTER_RADIXES.sort_by{|key, val|val}.map{|key, val|key}.reverse.freeze
     LONG_UNIT_NAMES  = VERBOSE_RADIXES.sort_by{|key, val|val}.map{|key, val|key}.reverse.freeze
     
-    if RUBY_VERSION >= '1.9.3'
+    if respond_to? :private_constant
       private_constant :BASE_RADIXES, :VERBOSE_RADIXES, :SHORTER_RADIXES, :SHORT_UNIT_NAMES, :LONG_UNIT_NAMES
     end
     
@@ -66,7 +72,7 @@ class Time
         new seconds, :second
       end
       
-      private *Forwardable.instance_methods(false)
+      private(*Forwardable.instance_methods(false))
       private
 
       # @macro [attach] define_reader
@@ -106,17 +112,28 @@ class Time
     define_reader :min
     define_reader :second
     define_reader :sec
-    define_reader :milisecond
+    define_reader :millisecond
     define_reader :msec
-
+    alias_method :days, :day
+    alias_method :hours, :hour
+    alias_method :minutes, :minute
+    alias_method :seconds, :second
+    alias_method :milliseconds, :millisecond
+    alias_method :milli, :millisecond
+  
     define_changer :day
     define_changer :hour
     define_changer :minute
     define_changer :min
     define_changer :second
     define_changer :sec
-    define_changer :milisecond
+    define_changer :millisecond
     define_changer :msec
+    alias_method :'days=', :'day='
+    alias_method :'hours=', :'hour='
+    alias_method :'minutes=', :'minute='
+    alias_method :'seconds=', :'second='
+    alias_method :'milliseconds=', :'millisecond='
 
     # @return [Number]
     def hash
@@ -170,10 +187,15 @@ class Time
       end
     end
     
+    # @return [Integer]
+    def sleep
+      Kernel.sleep @second
+    end
+    
     private
     
     def replace(size, unit)
-      raise ArgumentError, "Unknown unit. Choose from [#{RADIXES.keys.join(', ')}]." unless radix = RADIXES[unit]
+      raise ArgumentError, "Unknown unit." unless radix = RADIXES[unit]
       raise ArgumentError, 'Keep plus number.' unless size >= 0
       raise ArgumentError, 'Only Integer for msec.' if [:msec, :millisecond].include?(unit) and ! size.kind_of?(Integer)
 
@@ -206,7 +228,7 @@ class Time
       if (units = nonempty_units).any?
         units.map{|size, i|"#{size}#{LONG_UNIT_NAMES[i]}#{size > 1 ? 's' : nil}"}.join(' ')
       else
-        '0milisecond'
+        '0millisecond'
       end
     end
     
