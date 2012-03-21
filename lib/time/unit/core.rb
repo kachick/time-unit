@@ -1,13 +1,10 @@
 # Time::Unit
 #   Copyright (C) 2010  Kenichi Kamiya
-#   documented for YARD format
 
 require 'forwardable'
 
 class Time
   # @author Kenichi Kamiya
-  # * express the interval between two times
-  # * internal base unit is second
   class Unit
     extend Forwardable
     include Comparable
