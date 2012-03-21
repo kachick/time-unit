@@ -1,7 +1,7 @@
 = Time::Unit
 
-http://github.com/kachick/time-unit
-http://rubygems.org/gems/time-unit
+* http://github.com/kachick/time-unit
+* http://rubygems.org/gems/time-unit
 
 == Description
 
