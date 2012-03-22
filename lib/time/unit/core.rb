@@ -110,7 +110,21 @@ class Time
     alias_method :milli, :millisecond
     
     def eql?(other)
-      kind_of?(other.class) && @second == other.second
+      @second == (
+        if kind_of? other.class
+          other.second
+        else
+          if other.kind_of? ::Numeric
+            other
+          else
+            if other.respond_to? :to_int
+              other.to_int
+            else
+              false
+            end
+          end
+        end
+      )
     end
     
     alias_method :==, :eql?

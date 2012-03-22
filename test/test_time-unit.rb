@@ -48,6 +48,8 @@ class TestTimeUnit < Test::Unit::TestCase
   
   def test_eql?
     assert_equal @unit_dummy, @unit1
+    assert_equal 9999, @unit1
+    assert_equal @unit1, 9999
     assert_same true, @unit1 == @unit_dummy
     assert_not_equal @unit1, @unit2
     assert_same false, @unit_dummy.equal?(@unit1)

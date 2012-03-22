@@ -9,7 +9,7 @@ class TestTimeUnit < Test::Unit::TestCase
     now = Time.now
     result = now - last
 
-    assert_equal result.class, Time::Unit
-    assert_equal result, 1
+    assert_equal Time::Unit, result.class
+    assert_equal 1, result
   end
 end
