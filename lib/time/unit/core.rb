@@ -90,7 +90,7 @@ class Time
 
     def_delegators(:@second,
       :to_i, :to_f, :to_r, :/, :divmod, :div, :quo, :modulo, :remainder, :zero?,
-      :nonzero?, :to_int, :<=>, :step, :coerce, :*, :**, :%
+      :nonzero?, :to_int, :<=>, :step, :coerce, :*, :**, :%, :hash
     )
 
     define_reader :day
@@ -107,14 +107,9 @@ class Time
     alias_method :seconds, :second
     alias_method :milliseconds, :millisecond
     alias_method :milli, :millisecond
-
-    # @return [Number]
-    def hash
-      [self.class, @second].hash
-    end
     
     def eql?(other)
-      hash.equal? other.hash
+      @second == other.second
     end
 
     # @return [Time::Unit]
