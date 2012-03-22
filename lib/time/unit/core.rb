@@ -4,6 +4,7 @@
 require 'forwardable'
 
 class Time
+
   # @author Kenichi Kamiya
   class Unit
     extend Forwardable
@@ -204,4 +205,5 @@ class Time
     
     alias_method :to_verbose_str, :to_long_str
   end
+
 end
