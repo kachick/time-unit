@@ -10,7 +10,7 @@ class Time
     extend Forwardable
     include Comparable
 
-    VERSION = '0.0.6'.freeze
+    VERSION = '0.0.7'.freeze
     Version = VERSION
     
     SECOND      = Rational 1, 1

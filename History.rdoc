@@ -1,6 +1,15 @@
+=== 0.0.7 2012-3-23
+
+* delete:
+  * changers
+  * aliased loader(time-unit.rb)
+
+* fix:
+  * #eql?, #hash, #===
+
 === 0.0.6 2011-12-3
 
-* change:
+* modify:
   * add methods (Time::Unit#sleep)
   * alias reader, changer(with suffix 's')
   * dived import.rb:
@@ -14,7 +23,7 @@
 
 === 0.0.5 2011-11-24
 
-* change:
+* modify:
   * '#to_s(true)':
     * add suffix 's' when verbose option is true
     * '0msec' or '0milisecond' when all fields are 0

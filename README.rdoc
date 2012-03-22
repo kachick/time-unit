@@ -5,7 +5,7 @@
 
 == Description
 
-express intervals between any two times
+Express intervals between any two times
 
 == Usage
 
