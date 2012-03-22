@@ -109,8 +109,10 @@ class Time
     alias_method :milli, :millisecond
     
     def eql?(other)
-      @second == other.second
+      kind_of?(other.class) && @second == other.second
     end
+    
+    alias_method :==, :eql?
 
     # @return [Time::Unit]
     def +(other)
