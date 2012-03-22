@@ -145,7 +145,7 @@ class Time
     
     # @return [Array<Number>]
     def to_a
-      [].tap do |list|
+      [].tap {|list|
         val  = 0
         rest = second
         
@@ -157,7 +157,7 @@ class Time
         msec = rest / MILLISECOND
         
         list << (msec == msec.to_i ? msec.to_i : raise('must not happen'))
-      end
+      }
     end
     
     # @return [Integer]
