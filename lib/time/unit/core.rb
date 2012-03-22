@@ -82,16 +82,6 @@ class Time
           rational == integer ? integer : rational
         end
       end
-  
-      # @macro [attach] define_changer
-      #   @method $1=(size)
-      #   @param size new content
-      #   @return [Time::Unit] self(content replaced)
-      def define_changer(unit)
-        define_method "#{unit}=" do |size|
-          replace size, unit
-        end
-      end
     end
 
     def initialize(size, unit=:second)
@@ -117,20 +107,6 @@ class Time
     alias_method :seconds, :second
     alias_method :milliseconds, :millisecond
     alias_method :milli, :millisecond
-  
-    define_changer :day
-    define_changer :hour
-    define_changer :minute
-    define_changer :min
-    define_changer :second
-    define_changer :sec
-    define_changer :millisecond
-    define_changer :msec
-    alias_method :'days=', :'day='
-    alias_method :'hours=', :'hour='
-    alias_method :'minutes=', :'minute='
-    alias_method :'seconds=', :'second='
-    alias_method :'milliseconds=', :'millisecond='
 
     # @return [Number]
     def hash

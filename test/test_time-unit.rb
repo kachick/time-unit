@@ -64,14 +64,6 @@ class TestTimeUnit < Test::Unit::TestCase
     assert(@unit3 < @unit1)
   end
   
-  def test_attr_writer
-    unit = @unit1.dup
-    unit.minute = 30
-    
-    assert_not_equal @unit1, unit
-    assert_equal(Time::Unit.new(1800), unit)
-  end
-  
   def test_truth
     assert true
   end
