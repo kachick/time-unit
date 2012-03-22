@@ -2,12 +2,12 @@ History.rdoc
 Manifest.txt
 README.rdoc
 Rakefile
-lib/time-unit.rb
 lib/time/unit.rb
 lib/time/unit/core.rb
+lib/time/unit/ext.rb
 lib/time/unit/import.rb
-lib/time/unit/time_ext.rb
-lib/time/unit/time_taint.rb
+lib/time/unit/ext/time.rb
+lib/time/unit/taint/time.rb
 test/test_helper.rb
 test/test_helper-import.rb
 test/test_time-unit.rb

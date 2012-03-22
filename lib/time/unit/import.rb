@@ -1,3 +1,1 @@
-require_relative 'core'
-require_relative 'time_ext'
-require_relative 'time_taint'
+require_relative 'taint/time'
