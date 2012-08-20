@@ -2,6 +2,7 @@
 #   Copyright (C) 2010  Kenichi Kamiya
 
 require 'forwardable'
+require_relative 'version'
 
 class Time
 
@@ -9,9 +10,6 @@ class Time
   class Unit
     extend Forwardable
     include Comparable
-
-    VERSION = '0.0.7'.freeze
-    Version = VERSION
     
     SECOND      = Rational 1, 1
     MILLISECOND = SECOND / 1000

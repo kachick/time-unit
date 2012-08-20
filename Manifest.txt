@@ -2,9 +2,12 @@ History.rdoc
 Manifest.txt
 README.rdoc
 Rakefile
+Gemfile
+time-unit.gemspec
 lib/time/unit.rb
 lib/time/unit/core.rb
 lib/time/unit/ext.rb
+lib/time/unit/version.rb
 lib/time/unit/import.rb
 lib/time/unit/ext/time.rb
 lib/time/unit/taint/time.rb
