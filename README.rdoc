@@ -1,7 +1,4 @@
-= Time::Unit
-
-* http://github.com/kachick/time-unit
-* http://rubygems.org/gems/time-unit
+= time-unit
 
 == Description
 
@@ -9,42 +6,45 @@ Express intervals between any two times
 
 == Usage
 
-* setup
+=== Setup
+
     require 'time/unit'
 
-* standard construction
+=== Construction
+
     sec_30 = Time::Unit.new(30) #=> 30sec
     # aliased
     day_1 = Time.Unit(1, :day) #=> 1day
 
-* return other units
+=== Get other units
+
     sec_30.millisecond #=> 30000
     sec_30.second      #=> 30
     sec_30.minute      #=> 1/2
     sec_30.hour        #=> 1/120
     sec_30.day         #=> 1/2880
    
-* extend interface
+=== Extend API
+
     last = Time.now
     sleep 1
-    # Here, not tainted other namespaces
     Time.now - last #=> 1.0(Float)
 
-    # extend
     require 'time/unit/import'
-    
-    # as you see
     Time.now - last #=> 1sec(Time::Unit)
 
-* construct with unit name
+=== Construct with unit name
+
     min_55_and_more = Time.Unit(3333333, :msec) #=> 55min 33sec 333msec
 
-* verbose formatable
+=== Verbose formatable
+
     min_55_and_more.to_s(true) #=> 55minutes 33seconds 333milliseconds
     Time.Unit(99, :min).to_s(true) #=> 1hour 39minutes
     (Time.Unit(99, :min) + Time.Unit(22, :min)).to_s(true) #=> 2hours 1minute
 
-* calculatable
+=== Calculatable
+
     sec_30 + min_55_and_more #=> 56min 3sec 333msec
     min_55_and_more - sec_30 #=> 55min 3sec 333msec
     Time.now + sec_30 #=> (increased)
@@ -52,21 +52,26 @@ Express intervals between any two times
     # cast arguments to seconds when Integer or Rational
     Time.Unit(1, :hour) + 330 #=> 1hour 5min 30sec
 
-* max unit is day(not mounth or year)
+=== Max unit is day(not mounth or year)
+
     hour_900 = Time.Unit(900, :hour) #=> 37day 12hour
 
-* sort and remove empty field when display
+=== Sort and remove empty field when display
+
     Time.Unit(400, :msec) + 20 + Time.Unit(20, :day) + 40 #=> 20day 1min 400msec (removed 0sec)
 
-* comparable
+=== Comparable
+
     sec_30 < hour_900 #=> true
     [sec_30, min_55_and_more, hour_900].sort #=> ["30sec", "55min 33sec 333msec", "37day 12hour"]
 
-* parse from strings
+=== Parse from strings
+
     unit_1 = Time::Unit.parse('55minutes 33seconds 333milliseconds') #=> 55min 33sec 333msec
     unit_2 = Time::Unit.parse('55min 33sec 333msec') #=> 55min 33sec 333msec
 
-* and more
+=== And more
+
     sec_30.sleep #=> wait for 30 seconds
 
 == Requirements
@@ -75,11 +80,20 @@ Express intervals between any two times
 
 == Installation
 
-* sudo gem install time-unit
+    gem install time-unit
+
+== Links
+
+code   :: https://github.com/kachick/time-unit
+issues :: https://github.com/kachick/time-unit/issues
+CI     :: http://travis-ci.org/#!/kachick/time-unit
+gem    :: https://rubygems.org/gems/time-unit
+gem+   :: http://metagem.info/gems/time-unit
 
 == License
 
-Copyright (C) 2010  Kenichi Kamiya
+The MIT X License
 
-(The MIT License)
-See the included file LICENSE.
+Copyright (C) 2010 Kenichi Kamiya
+
+See the file LICENSE for further details.
