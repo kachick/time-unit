@@ -1,8 +1,6 @@
-$VERBOSE = true
-require File.dirname(__FILE__) + '/test_helper-import.rb'
+require_relative 'test_helper-import'
 
 class TestTimeUnit < Test::Unit::TestCase
-  
   def test_minus
     last = Time.now
     sleep 1

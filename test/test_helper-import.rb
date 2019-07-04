@@ -1,4 +1,4 @@
 require 'stringio'
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/time/unit'
-require File.dirname(__FILE__) + '/../lib/time/unit/import'
+require_relative '../lib/time/unit'
+require_relative '../lib/time/unit/import'

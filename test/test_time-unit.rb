@@ -1,8 +1,6 @@
-$VERBOSE = true
-require File.dirname(__FILE__) + '/test_helper.rb'
+require_relative 'test_helper'
 
 class TestTimeUnit < Test::Unit::TestCase
-
   def setup
     @unit1      = Time::Unit.new 9999
     @unit2      = Time::Unit.new 984578584383123, :millisecond
