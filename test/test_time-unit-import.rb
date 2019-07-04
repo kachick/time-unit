@@ -10,6 +10,6 @@ class TestTimeUnit < Test::Unit::TestCase
     result = now - last
 
     assert_equal Time::Unit, result.class
-    assert_equal 1, result
+    assert_equal 1, result.to_i
   end
 end
