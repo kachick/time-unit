@@ -76,7 +76,7 @@ Express intervals between any two times
 
 == Requirements
 
-* Ruby 1.9.2 or later
+* Ruby 2.5 or later
 
 == Installation
 
