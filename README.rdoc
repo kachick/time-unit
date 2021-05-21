@@ -1,5 +1,9 @@
 = time-unit
 
+* <em><b>This repository is archived</b></em>
+* <em><b>TNo longer maintained</b></em>
+* <em><b>TAll versions have been yanked from https://rubygems.org/ for releasing valuable namespace for others</b></em>
+
 == Description
 
 Express intervals between any two times
@@ -77,18 +81,6 @@ Express intervals between any two times
 == Requirements
 
 * Ruby 2.5 or later
-
-== Installation
-
-    gem install time-unit
-
-== Links
-
-code   :: https://github.com/kachick/time-unit
-issues :: https://github.com/kachick/time-unit/issues
-CI     :: http://travis-ci.org/#!/kachick/time-unit
-gem    :: https://rubygems.org/gems/time-unit
-gem+   :: http://metagem.info/gems/time-unit
 
 == License
 

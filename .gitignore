@@ -30,3 +30,5 @@ doc/
 
 # other
 *.lock
+
+.DS_Store
