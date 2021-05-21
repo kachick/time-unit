@@ -37,13 +37,13 @@ Express intervals between any two times
 
     min_55_and_more = Time.Unit(3333333, :msec) #=> 55min 33sec 333msec
 
-=== Verbose formatable
+=== Verbose formattable
 
     min_55_and_more.to_s(true) #=> 55minutes 33seconds 333milliseconds
     Time.Unit(99, :min).to_s(true) #=> 1hour 39minutes
     (Time.Unit(99, :min) + Time.Unit(22, :min)).to_s(true) #=> 2hours 1minute
 
-=== Calculatable
+=== Calculable
 
     sec_30 + min_55_and_more #=> 56min 3sec 333msec
     min_55_and_more - sec_30 #=> 55min 3sec 333msec
@@ -52,7 +52,7 @@ Express intervals between any two times
     # cast arguments to seconds when Integer or Rational
     Time.Unit(1, :hour) + 330 #=> 1hour 5min 30sec
 
-=== Max unit is day(not mounth or year)
+=== Max unit is day(not month or year)
 
     hour_900 = Time.Unit(900, :hour) #=> 37day 12hour
 
