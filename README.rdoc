@@ -1,8 +1,8 @@
 = time-unit
 
 * <em><b>This repository is archived</b></em>
-* <em><b>TNo longer maintained</b></em>
-* <em><b>TAll versions have been yanked from https://rubygems.org/ for releasing valuable namespace for others</b></em>
+* <em><b>No longer maintained</b></em>
+* <em><b>All versions have been yanked from https://rubygems.org/ for releasing valuable namespace for others</b></em>
 
 == Description
 
