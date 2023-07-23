@@ -1,6 +1,6 @@
 require 'forwardable'
 
-module Time::Unit::TimeExtention
+module Time::Unit::TimeExtension
   module EigenMethod
     extend Forwardable
 
@@ -15,5 +15,5 @@ module Time::Unit::TimeExtention
 end
 
 class Time
-  extend Time::Unit::TimeExtention::EigenMethod
+  extend Time::Unit::TimeExtension::EigenMethod
 end
